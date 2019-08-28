@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="code">
+	<select id="relCodeList" resultType="map">
+		SELECT cdno, cdname FROM EXAM_MANAGER.CODEMNG
+		where upcd='C0020'
+	</select>
+	<select id="codeListAll" resultType="code">
+		SELECT CDNO, CDLVL, UPCD, CDNAME, INSUSER, INSDATE, USEYN FROM EXAM_MANAGER.CODEMNG 
+
+		START WITH UPCD = 'C0000'
+
+		CONNECT BY PRIOR CDNO = UPCD
+	</select>
+	<select id="getMaxCodeNo" resultType="String">
+		SELECT 'C' || LPAD(NVL(SUBSTR(MAX(CDNO),2) + 1, 1), 4, '0') FROM EXAM_MANAGER.CODEMNG
+	</select>
+</mapper>
